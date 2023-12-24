@@ -25,3 +25,10 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+img{
+  height: 400px;
+  width: 400px;
+  border-radius: 10px;
+  object-fit: cover;
+}

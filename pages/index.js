@@ -1,118 +1,195 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import { GetMovies, GetSearchMovies } from "@/services/movie";
+import React from "react";
+import MovieModal from "./MovieModal";
+import { useGlobalContext } from "../context/GlobalContext";
+import {
+  FaSearchengin,
+  FaHeart,
+  FaRegHeart,
+  FaCircleChevronRight,
+} from "react-icons/fa6";
+import { FaHeartbeat } from "react-icons/fa";
+import { FiEye } from "react-icons/fi";
+import { useRouter } from "next/router";
+import { ROUTER } from "../constant/Router";
+import { toast } from "react-toastify";
 
-const inter = Inter({ subsets: ['latin'] })
+export default function Home({ movies }) {
+  const { isMovieInWishlist, openModal, wishList, setWishList, wishLength } =
+    useGlobalContext();
+  const { push } = useRouter();
 
-export default function Home() {
+  const addToWishList = (imdbID) => {
+    const selectedMovie = movies.find((movie) => movie.imdbID === imdbID);
+    const existedMovie = wishList.find((movie) => movie.imdbID === imdbID);
+
+    const wishedMovies = existedMovie
+      ? [...wishList]
+      : [...wishList, selectedMovie];
+    setWishList(wishedMovies);
+    localStorage.setItem("wishList", JSON.stringify(wishedMovies));
+
+    if (!existedMovie) {
+      toast.success("Movie added successfully!", {
+        autoClose: 1000,
+      });
+    } else {
+      toast.info("Movie already added!", { autoClose: 1000 });
+    }
+  };
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <>
+      <section className="flex flex-col justify-center items-center py-20 bg-black font-poppins">
+        <div className="mb-10 -mt-8 flex items-center">
+          <div
+            className="flex justify-center items-center cursor-pointer "
+            onClick={() => push(ROUTER.WishList)}
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            <p className="text-sky-300 hover:opacity-75 transition-all duration-500">
+              <FaHeartbeat size={50} />
+            </p>
+            <p className="text-red-200 mb-10 ml-3 text-xl">{wishLength}</p>
+          </div>
+          <form>
+            <div className="group px-6 mx-4 py-2 text-sky-400 ">
+              <input
+                type="text"
+                placeholder="Search Movies"
+                name="search"
+                className="text-sky-50 bg-transparent border-b border-sky-400  focus:outline-none w-24 lg:w-48 transition duration-500 "
+              />
+              <button className="transition-all duration-500 ">
+                <p className="bg-sky-300 px-5 py-1 mt-2 ml-4 rounded text-black group-hover:opacity-75 transition duration-500 text-3xl">
+                  <FaSearchengin />
+                </p>
+              </button>
+            </div>
+          </form>
+          <button
+            type="button"
+            onClick={() => {
+              push(`${ROUTER.Home}?reset=true`);
+            }}
+            className="group-hover:bg-blue-100 transition duration-500 text-xl ml-5 rounded
+            text-black  text-semibold  bg-sky-300 px-5 py-1 hover:opacity-75 "
+          >
+            Reset
+          </button>
         </div>
-      </div>
+        <div className=" bg-black container grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
+          {movies && movies.length > 0 ? (
+            movies.map((movie) => {
+              const inWishlist = isMovieInWishlist(movie.imdbID);
+              return (
+                <div className="mx-auto">
+                  <div className="group relative overflow-hidden cursor-pointer">
+                    <img
+                      src={movie.Poster}
+                      className="group-hover:scale-110 group-hover:opacity-50 duration-500 rounded-sm "
+                      alt={movie.Title}
+                    />
+                    <div className="absolute px-8 bottom-8">
+                      <h2 className="text-gega-grey group-hover:text-gega-melon group-hover:mb-5 font-poppins font-bold duration-500 text-xl">
+                        {movie.Title.slice(0, 13)}
+                        <span className="group-hover:text-green-500 ml-3">
+                          {movie.Year}
+                        </span>
+                      </h2>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+                      <p className="text-md opacity-0 group-hover:opacity-100 group-hover:mb-14 duration-500 text-gega-grey"></p>
+                      <div className="absolute flex space-x-8 text-gega-grey opacity-0 -bottom-3 group-hover:bottom-2 group-hover:opacity-100 duration-500">
+                        <button
+                          className="hover:text-gega-red hover:opacity-60 duration-500"
+                          onClick={() => addToWishList(movie.imdbID)}
+                        >
+                          {inWishlist ? (
+                            <FaHeart size={40} className="text-gega-red" />
+                          ) : (
+                            <FaRegHeart size={40} className="text-gega-red" />
+                          )}
+                        </button>
+                        <button
+                          className="text-cyan-700  hover:opacity-60 duration-500"
+                          onClick={() => openModal(movie)}
+                        >
+                          <FiEye size={40} />
+                        </button>
+                        <button
+                          className="text-cyan-700   hover:opacity-60 duration-500"
+                          onClick={() =>
+                            push(`${ROUTER.Detail}/${movie.imdbID}`)
+                          }
+                        >
+                          <FaCircleChevronRight size={35} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <p className="text-gega-red text-4xl font-bold">Not Found...</p>
+          )}
+        </div>
+      </section>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+      <MovieModal />
+    </>
+  );
 }
+
+export async function getServerSideProps(context) {
+  const { query } = context;
+
+  try {
+    let movies;
+
+    if (query.search) {
+      movies = await GetSearchMovies(query.search);
+    } else if (query.reset) {
+      const response = await GetMovies();
+      movies = response.Search;
+    } else {
+      const response = await GetMovies();
+      movies = response.Search;
+    }
+
+    return {
+      props: {
+        movies,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching movies:", error.message);
+    return {
+      redirect: "/404",
+      props: {
+        movies: null,
+        hasError: true,
+      },
+    };
+  }
+}
+// export async function getServerSideProps() {
+//   try {
+//     const response = await GetMovies();
+//     console.log(response);
+
+//     return {
+//       props: {
+//         movies: response.Search,
+//       },
+//     };
+//   } catch (error) {
+//     console.error("Error fetching movies:", error.message);
+//     return {
+//       redirect: "/404",
+//       props: {
+//         movies: null,
+//         hasErrror: true,
+//       },
+//     };
+//   }
+// }
