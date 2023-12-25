@@ -2,7 +2,7 @@ import React from "react";
 import { ROUTER } from "../../constant/Router";
 import { useRouter } from "next/router";
 import { FaHome, FaHeartbeat } from "react-icons/fa";
-import { useGlobalContext } from "@/context/GlobalContext";
+import { useGlobalContext } from "../../context/GlobalContext";
 import { activeLink } from "../utils/ActiveLink";
 
 export default function NavBar() {

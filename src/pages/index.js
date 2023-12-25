@@ -1,4 +1,4 @@
-import { GetMovies, GetSearchMovies } from "@/services/movie";
+import { GetMovies, GetSearchMovies } from "../services/movie";
 import React from "react";
 import { useGlobalContext } from "../context/GlobalContext";
 import {
@@ -75,7 +75,7 @@ export default function Home({ movies }) {
                     <div className="group relative overflow-hidden cursor-pointer">
                       <img
                         src={movie.Poster}
-                        className="group-hover:scale-110 group-hover:opacity-50 duration-500 rounded-sm "
+                        className="group-hover:scale-110 group-hover:opacity-50 duration-500 rounded-sm h-96 w-96 object-cover"
                         alt={movie.Title}
                       />
                       <div className="absolute px-8 bottom-8">

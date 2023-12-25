@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "src/styles/globals.css";
 import { GlobalContextProvider } from "../context/GlobalContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

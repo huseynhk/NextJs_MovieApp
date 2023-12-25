@@ -2,8 +2,9 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { FaCircleChevronLeft } from "react-icons/fa6";
-import { GetMovieDetails } from "@/services/movie";
+import { GetMovieDetails } from "../../../services/movie";
 import { ROUTER } from "../../../constant/Router";
+
 
 export default function MovieDetail({ movieDetail }) {
   const { push } = useRouter();
