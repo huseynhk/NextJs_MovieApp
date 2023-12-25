@@ -4,26 +4,12 @@ import { toast } from "react-toastify";
 const GlobalContext = createContext();
 const GlobalContextProvider = ({ children }) => {
   const [wishList, setWishList] = useState([]);
-  useEffect(() => {
-    const storedWishList = localStorage.getItem("wishList");
-    if (storedWishList) {
-      setWishList(JSON.parse(storedWishList));
-    }
-  }, []);
-
+  const [searchInput, setSearchInput] = useState("");
   const wishLength = wishList.length;
-  const [show, setShow] = useState(false);
-  const [selectedMovie, setSelectedMovie] = useState(null);
 
-  const openModal = (movie) => {
-    setShow(true);
-    setSelectedMovie(movie);
-  };
-
-  const closeModal = () => {
-    setShow(false);
-    setSelectedMovie(null);
-  };
+  const filteredWishList = wishList.filter((movie) => {
+    return movie.Title.toLowerCase().includes(searchInput.toLowerCase());
+  });
 
   const isMovieInWishlist = (imdbID) => {
     return wishList.find((movie) => movie.imdbID === imdbID);
@@ -38,16 +24,22 @@ const GlobalContextProvider = ({ children }) => {
     });
   };
 
+  useEffect(() => {
+    const storedWishList = localStorage.getItem("wishList");
+    if (storedWishList) {
+      setWishList(JSON.parse(storedWishList));
+    }
+  }, []);
+
   const contextValue = {
+    searchInput,
+    setSearchInput,
+    wishLength,
     isMovieInWishlist,
+    deleteFromWishList,
+    filteredWishList,
     wishList,
     setWishList,
-    deleteFromWishList,
-    selectedMovie,
-    openModal,
-    closeModal,
-    show,
-    wishLength
   };
   const Component = GlobalContext.Provider;
   return <Component value={contextValue}>{children}</Component>;

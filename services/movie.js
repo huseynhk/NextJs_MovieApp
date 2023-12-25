@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const omdbApi = axios.create({
-  baseURL: "https://omdbapi.com",
+  baseURL: process.env.BASE_URL,
   params: {
-    apikey: "fc1fef96",
+    apikey: process.env.API_KEY,
   },
 });
 
@@ -17,7 +17,7 @@ export const GetMovies = async () => {
     }
   } catch (error) {
     console.log(error);
-    throw error; 
+    throw error;
   }
 };
 
@@ -35,7 +35,6 @@ export const GetSearchMovies = async (search) => {
     }
   }
 };
-
 
 export const GetMovieDetails = async (movieId) => {
   try {
