@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const omdbApi = axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: "https://omdbapi.com",
   params: {
-    apikey: process.env.API_KEY,
+    apikey: "fc1fef96",
   },
 });
 
