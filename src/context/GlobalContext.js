@@ -30,7 +30,6 @@ const GlobalContextProvider = ({ children }) => {
       setWishList(JSON.parse(storedWishList));
     }
   }, []);
-
   const contextValue = {
     searchInput,
     setSearchInput,
