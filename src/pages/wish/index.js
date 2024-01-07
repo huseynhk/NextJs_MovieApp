@@ -34,7 +34,7 @@ export default function WishList() {
             {filteredWishList && filteredWishList.length > 0 ? (
               filteredWishList.map((movie) => {
                 return (
-                  <div className="mx-auto">
+                  <div className="mx-auto" key={movie.imdbID}>
                     <div className="group relative overflow-hidden cursor-pointer">
                       <img
                         src={movie.Poster}

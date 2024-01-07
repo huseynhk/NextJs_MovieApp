@@ -5,13 +5,15 @@ import { FaCircleChevronLeft } from "react-icons/fa6";
 import { GetMovieDetails } from "../../../services/movie";
 import { ROUTER } from "../../../constant/Router";
 
-
 export default function MovieDetail({ movieDetail }) {
   const { push } = useRouter();
   return (
     <section className="bg-gray-900 py-20 ">
       {movieDetail ? (
-        <div className="max-w-md border-cyan-400 border-2 rounded-xl  lg:max-w-3xl lg:flex font-poppins  shadow-xl shadow-cyan-950 bg-gray-900  mx-auto">
+        <div
+          className="max-w-md border-cyan-400 border-2 rounded-xl  lg:max-w-3xl lg:flex font-poppins  shadow-xl shadow-cyan-950 bg-gray-900  mx-auto"
+          key={movieDetail.imdbID}
+        >
           <img
             className="w-full lg:w-1/2 lg:h-[550px]  object-cover"
             src={movieDetail.Poster}

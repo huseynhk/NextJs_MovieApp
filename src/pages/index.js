@@ -71,7 +71,7 @@ export default function Home({ movies }) {
               movies.map((movie) => {
                 const inWishlist = isMovieInWishlist(movie.imdbID);
                 return (
-                  <div className="mx-auto">
+                  <div className="mx-auto" key={movie.imdbID}>
                     <div className="group relative overflow-hidden cursor-pointer">
                       <img
                         src={movie.Poster}
