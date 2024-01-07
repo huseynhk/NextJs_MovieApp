@@ -5,9 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function App({ Component, pageProps }) {
   return (
-      <GlobalContextProvider>
-        <ToastContainer />
-        <Component {...pageProps} />
-      </GlobalContextProvider>
+    <GlobalContextProvider>
+      <Component {...pageProps} />
+      <ToastContainer />
+    </GlobalContextProvider>
   );
 }
