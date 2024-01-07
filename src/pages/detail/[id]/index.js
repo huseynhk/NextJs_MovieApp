@@ -8,7 +8,6 @@ import { ROUTER } from "../../../constant/Router";
 
 export default function MovieDetail({ movieDetail }) {
   const { push } = useRouter();
-
   return (
     <section className="bg-gray-900 py-20 ">
       {movieDetail ? (
