@@ -3,11 +3,14 @@ import { ROUTER } from "../../constant/Router";
 import { useRouter } from "next/router";
 import { FaHome, FaHeartbeat } from "react-icons/fa";
 import { useGlobalContext } from "../../context/GlobalContext";
-import { activeLink } from "../utils/ActiveLink";
 
 export default function NavBar() {
   const { push, pathname } = useRouter();
   const { wishLength } = useGlobalContext();
+
+  const activeLink = (path, current) => {
+    return path == current;
+  };
 
   return (
     <div className="p-4 lg:p-3 bg-gray-800 flex flex-col  lg:flex-row justify-evenly items-center ">
