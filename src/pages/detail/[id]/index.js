@@ -50,7 +50,7 @@ export default function MovieDetail({ movieDetail }) {
           </div>
         </div>
       ) : (
-        <div className="bg-black h-[450px] w-full">
+        <div className="bg-gray-900 h-[450px] w-full">
           <h1 className="text-gega-red text-4xl capitalize">not found</h1>
         </div>
       )}
@@ -64,13 +64,12 @@ export async function getServerSideProps({ query }) {
     console.log("response", response);
     return {
       props: {
-        movieDetail: response || [],
+        movieDetail: response,
       },
     };
   } catch (error) {
     console.error("Error fetching movies:", error.message);
     return {
-      redirect: "/404",
       props: {
         movieDetail: null,
         hasErrror: true,
