@@ -102,7 +102,11 @@ export default function Home({ movies }) {
                           <button
                             className="text-cyan-300   hover:opacity-60 duration-500"
                             onClick={() =>
-                              push(`${ROUTER.Detail}/${movie.imdbID}`)
+                              push(
+                                `${ROUTER.Detail}/${
+                                  movie.imdbID ? movie.imdbID : ""
+                                }`
+                              )
                             }
                           >
                             <FaCircleChevronRight size={50} />
