@@ -50,7 +50,7 @@ export default function MovieDetail({ movieDetail }) {
           </div>
         </div>
       ) : (
-        <div className="bg-gray-900 h-[450px] w-full">
+        <div className="bg-gray-900 h-[450px] w-full text-center py-20">
           <h1 className="text-gega-red text-4xl capitalize">not found</h1>
         </div>
       )}
