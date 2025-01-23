@@ -39,9 +39,9 @@ export default function Home({ movies }) {
     <>
       <Layout>
         <section className="flex flex-col justify-center items-center py-10 bg-gray-900 font-poppins">
-          <div className="pb-8 flex items-center">
+          <div className="pb-8 flex flex-col items-center md:flex-row">
             <form>
-              <div className="group px-6 mx-4 py-2 text-sky-400 ">
+              <div className="group px-4 mx-4 py-2 text-sky-400 ">
                 <input
                   type="text"
                   placeholder="Search Movies"
@@ -49,7 +49,7 @@ export default function Home({ movies }) {
                   className="text-sky-50 bg-transparent border-b border-sky-400  focus:outline-none w-24 lg:w-48 transition duration-500 "
                 />
                 <button className="transition-all duration-500 ">
-                  <p className="bg-sky-300 px-5 py-1 mt-2 ml-4 rounded text-black group-hover:opacity-75 transition duration-500 text-3xl">
+                  <p className="bg-sky-300 px-4 py-1 mt-2 ml-4 rounded text-black group-hover:opacity-75 transition duration-500 text-2xl">
                     <FaSearchengin />
                   </p>
                 </button>
@@ -60,8 +60,8 @@ export default function Home({ movies }) {
               onClick={() => {
                 push(`${ROUTER.Home}?reset=true`);
               }}
-              className="group-hover:bg-blue-100 transition duration-500 text-xl rounded
-            text-black  text-semibold  bg-sky-300 px-4 py-1 hover:opacity-75 "
+              className="group-hover:bg-blue-100 transition duration-500 text-md text-center rounded mt-3 md:mt-0 w-[75%] md:w-[17%]
+            text-black  font-semibold  bg-sky-300 px-3 py-1 hover:opacity-75 "
             >
               Reset
             </button>
