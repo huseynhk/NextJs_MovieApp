@@ -9,7 +9,7 @@ const omdbApi = axios.create({
 
 export const GetMovies = async () => {
   try {
-    const response = await omdbApi.get("/?s=all&page=1");
+    const response = await omdbApi.get("/?s=all&page=2");
     if (response.status !== 200) {
       throw new Error("Error fetching movie");
     } else {

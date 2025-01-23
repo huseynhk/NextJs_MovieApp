@@ -71,14 +71,14 @@ export default function Home({ movies }) {
               movies.map((movie) => {
                 const inWishlist = isMovieInWishlist(movie.imdbID);
                 return (
-                  <div className="mx-auto" key={movie.imdbID}>
-                    <div className="group relative overflow-hidden cursor-pointer">
+                  <div className="mx-auto " key={movie.imdbID}>
+                    <div className="group relative overflow-hidden cursor-pointer rounded-lg">
                       <img
                         src={movie.Poster}
-                        className="group-hover:scale-110 group-hover:opacity-50 duration-500 rounded-sm h-96 w-96 object-cover"
+                        className="group-hover:scale-110 group-hover:opacity-50 duration-500 rounded-lg h-96 w-96 object-cover"
                         alt={movie.Title}
                       />
-                      <div className="absolute px-8 bottom-8">
+                      <div className="absolute px-8 bottom-8 ">
                         <h2 className="text-gega-grey group-hover:text-gega-melon group-hover:mb-5 font-poppins font-bold duration-500 text-xl">
                           {movie.Title.slice(0, 13)}
                           <span className="group-hover:text-green-500 ml-3">

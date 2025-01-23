@@ -35,10 +35,10 @@ export default function WishList() {
               filteredWishList.map((movie) => {
                 return (
                   <div className="mx-auto" key={movie.imdbID}>
-                    <div className="group relative overflow-hidden cursor-pointer">
+                    <div className="group relative overflow-hidden cursor-pointer rounded-lg">
                       <img
                         src={movie.Poster}
-                        className="group-hover:scale-110 group-hover:opacity-50 duration-500 rounded-sm h-96 w-96 object-cover"
+                        className="group-hover:scale-110 group-hover:opacity-50 duration-500 rounded-lg h-96 w-96 object-cover"
                         alt={movie.Title}
                       />
                       <div className="absolute px-6 bottom-8">
